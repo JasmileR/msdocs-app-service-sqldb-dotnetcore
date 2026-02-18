@@ -9,16 +9,16 @@ if(builder.Environment.IsDevelopment())
         options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbConnection")));
     builder.Services.AddDistributedMemoryCache();
 }
-// else
-// {
-//     builder.Services.AddDbContext<MyDatabaseContext>(options =>
-//         options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
-//     builder.Services.AddStackExchangeRedisCache(options =>
-//     {
-//     options.Configuration = builder.Configuration["AZURE_REDIS_CONNECTIONSTRING"];
-//     options.InstanceName = "SampleInstance";
-//     });
-// }
+else
+{
+    builder.Services.AddDbContext<MyDatabaseContext>(options =>
+        options.UseSqlServer("Database=msdocs-core-sql-database;Server=msdocs-core-mysql-server.mysql.database.azure.com;User Id=lzehdiomtm;Password=2tYJq$4oLMyzW2$Z"));
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+    options.Configuration = builder.Configuration["REDIS_CONNECTION_STRING"];
+    options.InstanceName = "SampleInstance";
+    });
+}
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
